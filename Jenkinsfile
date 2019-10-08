@@ -2,7 +2,6 @@ pipeline {
   agent any
   parameters {
         string(name: 'TEST', defaultValue: 'Jenkins', description: 'Who should I say hello to?')
-    
         //string(name: 'sshHost', defaultValue: '100.26.206.96', description: 'SSH Host running Cypress and Locust')
   }
   stages {
