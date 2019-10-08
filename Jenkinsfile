@@ -12,21 +12,22 @@ pipeline {
                                 sudo -i -u testrunner -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""
       }
     }
-    stage('Locust') {
-      steps {
-        script {
-          withCredentials([usernamePassword(credentialsId: '	05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName')]) {
+    withCredentials([usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName')]){
+        stage('Locust') {
+            steps {
+                script {
+                  
+                def remote = [:]
+                remote.name = "testrunner"
+                remote.host = "${params.sshHost}"
+                remote.user = userName
+                remote.password = password
+                remote.allowAnyHosts = true
+                script {sshCommand remote: remote, command: "ls -lrt"}
+                }
 
-          def remote = [:]
-          remote.name = "testrunner"
-          remote.host = "${params.sshHost}"
-          remote.user = userName
-          remote.password = password
-          remote.allowAnyHosts = true
-          script {sshCommand remote: remote, command: "ls -lrt"}
+            }
         }
-
-      }
     }
   }
   parameters {
