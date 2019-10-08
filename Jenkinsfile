@@ -5,7 +5,6 @@ pipeline {
       steps {
         sh " echo Hello ${params.TEST}"
         sh " echo SSH Host ${params.sshHost}"
-        sh " echo export SLACK_USER_TOKEN="${params.slackOauthToken}"\r\nexport SLACK_THREAD="${params.slackThreadId}"\r\nexport PATH=\$PATH:/usr/bin/:/usr/local/bin/:/ome/testrunner/node_modules/.bin/\r\nsudo -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${input.websiteBase} && echo \$?"  
         }
      }
     }
