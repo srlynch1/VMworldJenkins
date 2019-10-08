@@ -7,7 +7,6 @@ pipeline {
         sh " echo SSH Host ${params.sshHost}"
         }
      }
-    }
     stage('Locust') {
       steps {
         script {
