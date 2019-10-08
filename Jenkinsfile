@@ -5,8 +5,12 @@ pipeline {
       steps {
         sh " echo Hello ${params.TEST}"
         sh " echo SSH Host ${params.sshHost}"
-        }
-     }
+        sh '''export SLACK_USER_TOKEN="${params.slackOauthToken}"
+export SLACK_THREAD="${params.slackThreadId}"
+export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
+sudo -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo $?'''
+      }
+    }
     stage('Locust') {
       steps {
         script {
