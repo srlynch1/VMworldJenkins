@@ -4,23 +4,16 @@ pipeline {
     stage('Cypress') {
       steps {
         script {
-          def remote = [:]
-          remote.name = "testrunner"
-          remote.host = "100.26.206.96"
-          remote.allowAnyHosts = true
-
           node {
-            withCredentials([usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', usernameVariable: 'userName', passwordVariable: 'password')]) {
-              remote.user = userName
-              remote.passsword = password
-              stage("SSH Steps Rocks!") {
-                writeFile file: 'abc.sh', text: 'ls'
-                sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done'
-                sshPut remote: remote, from: 'abc.sh', into: '.'
-                sshGet remote: remote, from: 'abc.sh', into: 'bac.sh', override: true
-                sshScript remote: remote, script: 'abc.sh'
-                sshRemove remote: remote, path: 'abc.sh'
-              }
+            def remote = [:]
+            remote.name = 'testrunner'
+            remote.host = '100.26.206.96'
+            remote.user = 'testrunner'
+            remote.password = 'VMware1!'
+            remote.allowAnyHosts = true
+            stage('Remote SSH') {
+              sshCommand remote: remote, command: "ls -lrt"
+              sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
             }
           }
         }
