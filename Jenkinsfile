@@ -1,14 +1,15 @@
 pipeline {
   agent any
-  parameters {
-        string(name: 'TEST', defaultValue: 'Jenkins', description: 'Who should I say hello to?')
-        string(name: 'sshHost', defaultValue: '100.26.206.96', description: 'SSH Host running Cypress and Locust')
-  }
   stages {
     stage('test') {
       steps {
         sh " echo Hello ${params.TEST}"
         sh " echo SSH Host ${params.sshHost}"
+        sh '''export SLACK_USER_TOKEN=\\"${params.slackOauthToken}\\"\\r\\nexport SLACK_THREAD=\\"${params.slackThreadId}\\"\\
+            \\r\\nexport PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/\\r\\nsudo\\
+            \\ -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config\\
+            \\ video=false --reporter json --env host=http://${params.ipAddress}${input.websiteBase}\\
+            \\ && echo $?"'''
       }
     }
     stage('Locust') {
@@ -21,8 +22,13 @@ pipeline {
           remote.password = "VMware1!"
           remote.allowAnyHosts = true
           script {sshCommand remote: remote, command: "ls -lrt"}
+        }
+
       }
-     }
-   }
+    }
+  }
+  parameters {
+    string(name: 'TEST', defaultValue: 'Jenkins', description: 'Who should I say hello to?')
+    string(name: 'sshHost', defaultValue: '100.26.206.96', description: 'SSH Host running Cypress and Locust')
   }
 }
