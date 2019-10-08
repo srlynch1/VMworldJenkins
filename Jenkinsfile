@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        sh ' echo "Hello ${params.TEST}"'
+        sh ' echo Hello ${params.TEST}'
         //sh ' echo "SSH Host ${params.sshHost}"'
       }
     }
