@@ -5,12 +5,12 @@ pipeline {
       steps {
         script {
           def remote = [:]
-          remote.name = "node-1"
-          remote.host = "10.000.000.153"
+          remote.name = "testrunner"
+          remote.host = "100.26.206.96"
           remote.allowAnyHosts = true
 
           node {
-            withCredentials([usernamePassword(credentialsId: 'sshUser', usernameVariable: 'userName', passwordVariable: 'password')]) {
+            withCredentials([usernamePassword(credentialsId: 'testrunner', usernameVariable: 'userName', passwordVariable: 'password')]) {
               remote.user = userName
               remote.passsword = password
               stage("SSH Steps Rocks!") {
@@ -31,12 +31,12 @@ pipeline {
       steps {
         script {
           def remote = [:]
-          remote.name = "node-1"
-          remote.host = "10.000.000.153"
+          remote.name = "testrunner"
+          remote.host = "100.26.206.96"
           remote.allowAnyHosts = true
 
           node {
-            withCredentials([usernamePassword(credentialsId: 'sshUser', usernameVariable: 'userName', passwordVariable: 'password')]) {
+            withCredentials([usernamePassword(credentialsId: 'testrunner', usernameVariable: 'userName', passwordVariable: 'password')]) {
               remote.user = userName
               remote.passsword = password
               stage("SSH Steps Rocks!") {
