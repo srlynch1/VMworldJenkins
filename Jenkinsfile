@@ -10,7 +10,7 @@ pipeline {
           remote.allowAnyHosts = true
 
           node {
-            withCredentials([usernamePassword(credentialsId: 'testrunner', usernameVariable: 'userName', passwordVariable: 'password')]) {
+            withCredentials([usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', usernameVariable: 'userName', passwordVariable: 'password')]) {
               remote.user = userName
               remote.passsword = password
               stage("SSH Steps Rocks!") {
@@ -36,7 +36,7 @@ pipeline {
           remote.allowAnyHosts = true
 
           node {
-            withCredentials([usernamePassword(credentialsId: 'testrunner', usernameVariable: 'userName', passwordVariable: 'password')]) {
+            withCredentials([usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', usernameVariable: 'userName', passwordVariable: 'password')]) {
               remote.user = userName
               remote.passsword = password
               stage("SSH Steps Rocks!") {
