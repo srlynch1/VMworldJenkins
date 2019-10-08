@@ -15,11 +15,13 @@ pipeline {
     stage('Locust') {
       steps {
         script {
+          withCredentials([usernamePassword(credentialsId: '	05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName')]) {
+
           def remote = [:]
           remote.name = "testrunner"
           remote.host = "${params.sshHost}"
-          remote.user = 'testrunner'
-          remote.password = "VMware1!"
+          remote.user = userName
+          remote.password = password
           remote.allowAnyHosts = true
           script {sshCommand remote: remote, command: "ls -lrt"}
         }
