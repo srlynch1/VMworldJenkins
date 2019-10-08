@@ -5,9 +5,6 @@ pipeline {
       steps {
         sh 'echo "test"'
       }
-      steps {
-        sh 'echo "test"'
-      }
     }
   }
 }
