@@ -15,7 +15,7 @@ pipeline {
           remote.user = 'testrunner'
           remote.password = 'VMware1!'
           remote.allowAnyHosts = true
-          sshCommand remote: remote, command: "ls -lrt"
+          script {sshCommand remote: remote, command: "ls -lrt"}
 }
         }
       }
