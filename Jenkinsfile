@@ -30,7 +30,7 @@ pipeline {
   parameters {
     string(name: 'TEST', defaultValue: 'Jenkins', description: 'Who should I say hello to?')
     string(name: 'sshHost', defaultValue: '100.26.206.96', description: 'SSH Host running Cypress and Locust')
-    string(name: 'slackOauthToken', defaultValue: 'abcdefghijklmnopqrstuvwxyz', description: 'Slack Token
+    string(name: 'slackOauthToken', defaultValue: 'abcdefghijklmnopqrstuvwxyz', description: 'Slack Token')
     string(name: 'slackThreadId', defaultValue: 'slackThreadHere', description: 'slackThreadId')
     string(name: 'testSpecPath', defaultValue: '100.26.206.96', description: 'Cypress Test Spec path')
     string(name: 'ipAddress', defaultValue: '100.26.206.96', description: 'Website IP Address')
