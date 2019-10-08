@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        sh 'echo "Hello $params.TEST"'
+        sh 'echo "Hello ${params.TEST}"'
       }
     }
     stage('Locust') {
@@ -16,7 +16,7 @@ pipeline {
         script {
           def remote = [:]
           remote.name = 'testrunner'
-          remote.host = '$params.TESTHOST'
+          remote.host = '${params.TESTHOST}'
           remote.user = 'testrunner'
           remote.password = 'VMware1!'
           remote.allowAnyHosts = true
