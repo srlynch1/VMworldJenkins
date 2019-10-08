@@ -1,9 +1,11 @@
 pipeline {
   agent any
+  parameters {
+        string(name: 'TEST', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
   stages {
     stage('test') {
       steps {
-        sh 'echo "test"'
+        sh 'echo "Hello $params.TEST"'
       }
     }
     stage('Locust') {
