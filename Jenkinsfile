@@ -16,13 +16,13 @@ pipeline {
         script {
           def remote = [:]
           remote.name = "testrunner"
-          remote.host = "100.26.206.96"
+          remote.host = "${params.sshHost}"
           remote.user = 'testrunner'
           remote.password = "VMware1!"
           remote.allowAnyHosts = true
           script {sshCommand remote: remote, command: "ls -lrt"}
-}
-        }
       }
-    }
+     }
+   }
   }
+}
