@@ -8,7 +8,8 @@ pipeline {
     }
     stage('Cypress') {
       steps {
-        withCredentials(bindings: [usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName')]) {
+        withCredentials(bindings: [usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName'),
+        string(credentialsId: 'slackToken', variable: 'slackToken')]) {
           script {
             def remote = [:]
             remote.name = "testrunner"
@@ -16,7 +17,7 @@ pipeline {
             remote.user = userName
             remote.password = password
             remote.allowAnyHosts = true
-            script {sshCommand remote: remote, command: """export SLACK_USER_TOKEN="${params.slackOauthToken}"
+            script {sshCommand remote: remote, command: """export SLACK_USER_TOKEN="$slackToken"
             export SLACK_THREAD="${params.slackThreadId}"
             export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
             sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""}
