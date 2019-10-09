@@ -55,7 +55,7 @@ pipeline {
     string(name: 'ipAddress', defaultValue: 'Commuter-tito-03426-1337974357.us-east-1.elb.amazonaws.com', description: 'Website IP Address')
     string(name: 'websiteBase', defaultValue: '/Tito/', description: 'Website Base URI')
     string(name: 'restWavefrontProxy', defaultValue: 'Commuter-tito-02439-1370868404.us-east-1.elb.amazonaws.com', description: 'Wavefront Proxy')
-    string(name: 'loadTestUsers', defaultValue: '200', description: 'Locust max users per second')
+    string(name: 'loadTestUsers', defaultValue: '100', description: 'Locust max users per second')
     string(name: 'loadHatchRate', defaultValue: '20', description: 'Locust hatch rate users per second')
   }
 }
