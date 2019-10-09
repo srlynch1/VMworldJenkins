@@ -1,4 +1,4 @@
-pipeline {
+ipeline {
   agent any
   stages {
     stage('test') {
@@ -28,6 +28,26 @@ pipeline {
 
       }
     }
+    stage('Locust') {
+      steps {
+        withCredentials(bindings: [usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName')]) {
+          script {
+            def remote = [:]
+            remote.name = "testrunner"
+            remote.host = "${params.sshHost}"
+            remote.user = userName
+            remote.password = password
+            remote.allowAnyHosts = true
+            script {sshCommand remote: remote, command: """ export WAVEFRONT_PROXY='${params.restWavefrontProxy}'
+                                                            export WEBSITE_ADDRESS="${params.ipAddress}"
+                                                            export PATH=$PATH:/usr/bin/:/usr/local/bin/
+                                                            sudo -E locust --no-web -c ${params.loadTestUsers} -r ${params.loadHatchRate} -f /usr/local/bin/locust_files/locustWavefront.py -t 3m --only-summary --host http://${params.ipAddress}"""}
+          }
+
+        }
+
+      }
+    }
   }
   parameters {
     string(name: 'TEST', defaultValue: 'Jenkins', description: 'Who should I say hello to?')
@@ -37,5 +57,9 @@ pipeline {
     string(name: 'testSpecPath', defaultValue: '/home/testrunner/titoactions.spec.js', description: 'Cypress Test Spec path')
     string(name: 'ipAddress', defaultValue: 'Commuter-tito-03426-1337974357.us-east-1.elb.amazonaws.com', description: 'Website IP Address')
     string(name: 'websiteBase', defaultValue: '/Tito/', description: 'Website Base URI')
+    string(name: 'restWavefrontProxy', defaultValue: '', description: 'Wavefront Proxy')
+    string(name: 'loadTestUsers', defaultValue: '200', description: 'Locust max users per second')
+    string(name: 'loadHatchRate', defaultValue: '20', description: 'Locust hatch rate users per second')
+    
   }
 }
