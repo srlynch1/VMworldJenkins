@@ -6,10 +6,10 @@ pipeline {
         sh " echo Hello ${params.TEST}"
         sh " echo SSH Host ${params.sshHost}"
         sh 'whoami'
-        sh """export SLACK_USER_TOKEN="${params.slackOauthToken}"
-                                                                export SLACK_THREAD="${params.slackThreadId}"
-                                                                export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
-                                                                sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""
+        //sh """export SLACK_USER_TOKEN="${params.slackOauthToken}"
+        //                                                       export SLACK_THREAD="${params.slackThreadId}"
+        //                                                        export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
+        //                                                        sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""
       }
     }
     stage('Locust') {
@@ -22,7 +22,10 @@ pipeline {
             remote.user = userName
             remote.password = password
             remote.allowAnyHosts = true
-            script {sshCommand remote: remote, command: "ls -lrt"}
+            script {sshCommand remote: remote, command: """export SLACK_USER_TOKEN="${params.slackOauthToken}"
+                                                                export SLACK_THREAD="${params.slackThreadId}"
+                                                                export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
+                                                                sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""}
           }
 
         }
