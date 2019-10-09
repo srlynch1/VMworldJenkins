@@ -50,7 +50,6 @@ pipeline {
   }
   parameters {
     string(name: 'sshHost', defaultValue: '18.233.153.169', description: 'SSH Host running Cypress and Locust')
-    string(name: 'slackOauthToken', defaultValue: 'abcdefghijklmnopqrstuvwxyz', description: 'Slack Token')
     string(name: 'slackThreadId', defaultValue: 'slackThreadHere', description: 'slackThreadId')
     string(name: 'testSpecPath', defaultValue: '/home/testrunner/titoactions.spec.js', description: 'Cypress Test Spec path')
     string(name: 'ipAddress', defaultValue: 'Commuter-tito-03426-1337974357.us-east-1.elb.amazonaws.com', description: 'Website IP Address')
