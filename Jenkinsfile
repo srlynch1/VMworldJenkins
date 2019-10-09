@@ -3,9 +3,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        sh " echo Hello ${params.TEST}"
         sh " echo SSH Host ${params.sshHost}"
-        sh 'whoami'
       }
     }
     stage('Cypress') {
@@ -50,14 +48,13 @@ pipeline {
     }
   }
   parameters {
-    string(name: 'TEST', defaultValue: 'Jenkins', description: 'Who should I say hello to?')
     string(name: 'sshHost', defaultValue: '18.233.153.169', description: 'SSH Host running Cypress and Locust')
     string(name: 'slackOauthToken', defaultValue: 'abcdefghijklmnopqrstuvwxyz', description: 'Slack Token')
     string(name: 'slackThreadId', defaultValue: 'slackThreadHere', description: 'slackThreadId')
     string(name: 'testSpecPath', defaultValue: '/home/testrunner/titoactions.spec.js', description: 'Cypress Test Spec path')
     string(name: 'ipAddress', defaultValue: 'Commuter-tito-03426-1337974357.us-east-1.elb.amazonaws.com', description: 'Website IP Address')
     string(name: 'websiteBase', defaultValue: '/Tito/', description: 'Website Base URI')
-    string(name: 'restWavefrontProxy', defaultValue: '', description: 'Wavefront Proxy')
+    string(name: 'restWavefrontProxy', defaultValue: 'Commuter-tito-02439-1370868404.us-east-1.elb.amazonaws.com', description: 'Wavefront Proxy')
     string(name: 'loadTestUsers', defaultValue: '200', description: 'Locust max users per second')
     string(name: 'loadHatchRate', defaultValue: '20', description: 'Locust hatch rate users per second')
   }
