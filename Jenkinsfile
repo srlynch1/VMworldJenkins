@@ -39,7 +39,7 @@ pipeline {
     string(name: 'slackOauthToken', defaultValue: 'abcdefghijklmnopqrstuvwxyz', description: 'Slack Token')
     string(name: 'slackThreadId', defaultValue: 'slackThreadHere', description: 'slackThreadId')
     string(name: 'testSpecPath', defaultValue: '/home/testrunner/titoactions.spec.js', description: 'Cypress Test Spec path')
-    string(name: 'ipAddress', defaultValue: '100.26.206.96', description: 'Website IP Address')
-    string(name: 'websiteBase', defaultValue: '100.26.206.96', description: 'Website Base URI')
+    string(name: 'ipAddress', defaultValue: 'Commuter-tito-03426-1337974357.us-east-1.elb.amazonaws.com', description: 'Website IP Address')
+    string(name: 'websiteBase', defaultValue: '/Tito', description: 'Website Base URI')
   }
 }
