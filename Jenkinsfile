@@ -19,11 +19,28 @@ pipeline {
             remote.password = password
             remote.allowAnyHosts = true
             script {sshCommand remote: remote, command: """export SLACK_USER_TOKEN="${params.slackOauthToken}"
-                                                           export SLACK_THREAD="${params.slackThreadId}"
-                                                           export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
-                                                           sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""}
+            export SLACK_THREAD="${params.slackThreadId}"
+            export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
+            sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""}
           }
 
+        }
+
+      }
+    }
+    stage('Locust') {
+      steps {
+        script {
+          def remote = [:]
+          remote.name = "testrunner"
+          remote.host = "${params.sshHost}"
+          remote.user = userName
+          remote.password = password
+          remote.allowAnyHosts = true
+          script {sshCommand remote: remote, command: """export SLACK_USER_TOKEN="${params.slackOauthToken}"
+          export SLACK_THREAD="${params.slackThreadId}"
+          export PATH=$PATH:/usr/bin/:/usr/local/bin/:/home/testrunner/node_modules/.bin/
+          sudo -n -E /home/testrunner/node_modules/.bin/cypress run --spec ${params.testSpecPath} --config video=false --reporter json --env host=http://${params.ipAddress}${params.websiteBase} && echo \$?"""}
         }
 
       }
