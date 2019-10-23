@@ -9,7 +9,7 @@ pipeline {
     stage('Cypress') {
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName'),
-                                        string(credentialsId: 'slackToken', variable: 'slackToken')]) {
+                                                string(credentialsId: 'slackToken', variable: 'slackToken')]) {
           script {
             def remote = [:]
             remote.name = "testrunner"
