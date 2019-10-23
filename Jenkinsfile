@@ -40,7 +40,7 @@ pipeline {
             script {sshCommand remote: remote, command: """ export WAVEFRONT_PROXY='${params.restWavefrontProxy}'
             export WEBSITE_ADDRESS="${params.ipAddress}"
             export PATH=$PATH:/usr/bin/:/usr/local/bin/
-            sudo -E locust --no-web -c ${params.loadTestUsers} -r ${params.loadHatchRate} -f /usr/local/bin/locust_files/${params.testSpec} -t 3m --only-summary --host http://${params.ipAddress}"""}
+            sudo -E locust --no-web -c ${params.loadTestUsers} -r ${params.loadHatchRate} -f /usr/local/bin/locust_files/${params.testSpecLocust} -t 3m --only-summary --host http://${params.ipAddress}"""}
           }
 
         }
@@ -51,6 +51,7 @@ pipeline {
   parameters {
     string(name: 'sshHost', defaultValue: '100.26.206.96', description: 'SSH Host running Cypress and Locust')
     string(name: 'slackThreadId', defaultValue: 'slackThreadHere', description: 'slackThreadId')
+    string(name: 'testSpecLocust', defaultValue: 'locustWavefrontBase.py', description: 'Locust Test Spec')
     string(name: 'testSpecPath', defaultValue: '/home/testrunner/titoactions.spec.js', description: 'Cypress Test Spec path')
     string(name: 'ipAddress', defaultValue: 'Commuter-tito-03426-1337974357.us-east-1.elb.amazonaws.com', description: 'Website IP Address')
     string(name: 'websiteBase', defaultValue: '/Tito/', description: 'Website Base URI')
