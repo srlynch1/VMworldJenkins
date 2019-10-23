@@ -9,7 +9,7 @@ pipeline {
     stage('Cypress') {
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: '05e46b61-cab8-41a8-8bc8-e0c60d6e7ea7', passwordVariable: 'password', usernameVariable: 'userName'),
-                                string(credentialsId: 'slackToken', variable: 'slackToken')]) {
+                                        string(credentialsId: 'slackToken', variable: 'slackToken')]) {
           script {
             def remote = [:]
             remote.name = "testrunner"
@@ -40,7 +40,7 @@ pipeline {
             script {sshCommand remote: remote, command: """ export WAVEFRONT_PROXY='${params.restWavefrontProxy}'
             export WEBSITE_ADDRESS="${params.ipAddress}"
             export PATH=$PATH:/usr/bin/:/usr/local/bin/
-            sudo -E locust --no-web -c ${params.loadTestUsers} -r ${params.loadHatchRate} -f /usr/local/bin/locust_files/locustWavefront.py -t 3m --only-summary --host http://${params.ipAddress}"""}
+            sudo -E locust --no-web -c ${params.loadTestUsers} -r ${params.loadHatchRate} -f /usr/local/bin/locust_files/${params.testSpec} -t 3m --only-summary --host http://${params.ipAddress}"""}
           }
 
         }
